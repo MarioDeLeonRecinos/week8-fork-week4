@@ -37,17 +37,19 @@ jobs:
         uses: elgohr/gcloud-login-action@v1
         with:
           account_key: ${{ secrets.GCLOUD_KEY }}
-
+          
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v4
         env:
           USER: ${{ secrets.HTPASSWD_USER }}
           PASSWORD: ${{ secrets.HTPASSWD_PASSWORD }}
+          GCP_USER: ${{ steps.gcloud.outputs.username }}
+          GCP_PASSWORD: ${{ steps.gcloud.outputs.password }}
         with:
           name: week8-355318/week-4
           username: ${{ steps.gcloud.outputs.username }}
           password: ${{ steps.gcloud.outputs.password }}
-          registry: gcr.io, us.gcr.io, eu.gcr.io or asia.gcr.io
+          registry: us.gcr.io
           tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
           dockerfile: ./docker-resources/Dockerfile
           buildargs: USER,PASSWORD
