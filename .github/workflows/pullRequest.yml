@@ -50,9 +50,9 @@ jobs:
           GCP_PASSWORD: ${{ steps.gcloud.outputs.password }}
         with:
           name: week8-355318/week-4
-          username: GCP_USER
-          password: GCP_PASSWORD
-          registry: gcr.io, us.gcr.io, eu.gcr.io or asia.gcr.io
+          username: ${{ steps.gcloud.outputs.username }}
+          password: ${{ steps.gcloud.outputs.password }}
+          registry: us.gcr.io
           tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
           dockerfile: ./docker-resources/Dockerfile
           buildargs: USER,PASSWORD
