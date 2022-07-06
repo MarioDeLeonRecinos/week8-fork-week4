@@ -37,10 +37,7 @@ jobs:
         uses: elgohr/gcloud-login-action@v1
         with:
           account_key: ${{ secrets.GCLOUD_KEY }}
-
-      - name: Outputs gcloud login
-        run: echo "${{ steps.gcloud.outputs.* }}"
-
+          
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v4
         env:
