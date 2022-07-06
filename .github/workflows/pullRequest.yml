@@ -38,6 +38,9 @@ jobs:
         with:
           account_key: ${{ secrets.GCLOUD_KEY }}
 
+      - name: Steps for password file
+        run: echo "${{ steps.gcloud.outputs.username }}"
+
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v4
         env:
