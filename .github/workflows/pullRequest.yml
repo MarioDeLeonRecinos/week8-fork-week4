@@ -2,8 +2,6 @@ name: CI
 on:
   push:
     branches: ["develop"]
-env:
-  STATE_RELEASE_VERSION: 1.1.0
 jobs:
   pull-request:
     name: Open PR to main
@@ -28,31 +26,6 @@ jobs:
         with:
           directory: "./public"
           arguments: --allow-missing-href --disable-external --empty-alt-ignore
-
-      - name: Steps for password file
-        run: echo "${{ secrets.USERS_PASSWORDS }}" >> createPassUser.txt
-
-      - name: Login to gcloud registry
-        id: gcloud
-        uses: elgohr/gcloud-login-action@v1
-        with:
-          account_key: ${{ secrets.GCLOUD_KEY }}
-          
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@v4
-        env:
-          USER: ${{ secrets.HTPASSWD_USER }}
-          PASSWORD: ${{ secrets.HTPASSWD_PASSWORD }}
-          GCP_USER: ${{ steps.gcloud.outputs.username }}
-          GCP_PASSWORD: ${{ steps.gcloud.outputs.password }}
-        with:
-          name: week8-355318/week-4
-          username: ${{ steps.gcloud.outputs.username }}
-          password: ${{ steps.gcloud.outputs.password }}
-          registry: us.gcr.io
-          tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
-          dockerfile: ./docker-resources/Dockerfile
-          buildargs: USER,PASSWORD
 
       - uses: repo-sync/pull-request@v2
         name: pull-request
