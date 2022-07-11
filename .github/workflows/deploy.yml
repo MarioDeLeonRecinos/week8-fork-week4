@@ -48,7 +48,7 @@ jobs:
           GCP_USER: ${{ steps.gcloud.outputs.username }}
           GCP_PASSWORD: ${{ steps.gcloud.outputs.password }}
         with:
-          name: week8-355318/week-4
+          name: ${{secrets.PROJECT_NAME}}/week-4
           username: ${{ steps.gcloud.outputs.username }}
           password: ${{ steps.gcloud.outputs.password }}
           registry: us.gcr.io
